@@ -63,10 +63,8 @@ if __name__ == "__main__":
     for i in userPixels:
         userClosestEmoji, filename = closestEmoji(i, emojiList, filelist)
         emoji = io.imread(assets +"/"+ filelist[filename])
-        finalImage[finalImageX:(finalImageX+emojiImageXOffset),finalImageY:(finalImageY+emojiImageYOffset)] = emoji
-        # print(finalImageX)
-        # print(finalImageY)
-        # print(finalImage.shape[0])
+        finalImage[finalImageY:(finalImageY+emojiImageYOffset),finalImageX:(finalImageX+emojiImageXOffset)] = emoji
+
         finalImageX += emojiImageXOffset
         if(finalImageX == finalImage.shape[0]):
             finalImageX = 0
@@ -78,13 +76,7 @@ if __name__ == "__main__":
     io.imshow(finalImageInt)
     io.imsave('poopy.png', finalImageInt)
     plt.show()
-    
-    
-        #can figure how to us
-    
-    
-    #     print(f'userPixel:{i} closestEmojiPixel:{userClosestEmoji} filename:{filelist[filename]}')
-        #now we know emojis so we create image in emoji form now
+
    
 
    
