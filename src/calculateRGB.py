@@ -1,4 +1,5 @@
 import os
+import sys
 import cv2
 import operator
 import numpy as np
@@ -6,9 +7,12 @@ from skimage import io
 from math import sqrt
 import matplotlib.pyplot as plt
 from PIL import Image
+import findDominant
+import closestEmoji
 #see below page for much of the code this program is based upon
 #https://stackoverflow.com/questions/43111029/how-to-find-the-average-colour-of-an-image-in-python-with-opencv/43111221
 
+<<<<<<< Updated upstream:src/calculateRGB.py
 #looks at the assets/72x72 directory, calculates the dominant color in each .png image in that folder, and returns a dictionary where the key refers to the image file name, and the value is a tuple of RGB values
 
 #possible improvments to function involve having a check in place for ignore pixels under a certain alpha value
@@ -52,6 +56,17 @@ if __name__ == "__main__":
     userPixels = np.float32(userImage.reshape(-1, 3))
     emojiList,filelist = dominant()
     finalImage = np.zeros((userImageHeight*72, userImageWidth*72, 4))
+=======
+
+if __name__ == "__main__":
+    
+    #change string to path of image name
+    userImage = io.imread('osrsIcon.png')[:,:,:-1]
+    userImageHeight, userImageWidth = userImage.shape[0], userImage.shape[1]
+    userPixels = np.float32(userImage.reshape(-1, 3))
+    emojiList,filelist = findDominant.dominant()
+    finalImage = np.zeros((userImageHeight*72, userImageWidth*72, 4,), dtype=np.uint8)
+>>>>>>> Stashed changes:src/ConvertPNG.py
     finalImageX = 0
     finalImageY = 0
 
@@ -61,7 +76,7 @@ if __name__ == "__main__":
     cur_path = os.path.dirname(__file__)
     assets = os.path.relpath('../assets/72x72/', cur_path)
     for i in userPixels:
-        userClosestEmoji, filename = closestEmoji(i, emojiList, filelist)
+        userClosestEmoji, filename = closestEmoji.closestEmoji(i, emojiList, filelist)
         emoji = io.imread(assets +"/"+ filelist[filename])
         finalImage[finalImageY:(finalImageY+emojiImageYOffset),finalImageX:(finalImageX+emojiImageXOffset)] = emoji
 
@@ -71,7 +86,12 @@ if __name__ == "__main__":
             finalImageY += emojiImageYOffset
     print('done') 
     
+<<<<<<< Updated upstream:src/calculateRGB.py
     finalImageInt = finalImage.astype(int)
+=======
+
+    io.imsave('emojiVersionImage.png', finalImage)
+>>>>>>> Stashed changes:src/ConvertPNG.py
     
     io.imshow(finalImageInt)
     io.imsave('poopy.png', finalImageInt)
